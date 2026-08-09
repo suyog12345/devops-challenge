@@ -1,0 +1,43 @@
+namespace:
+  name: devops-helm
+
+backend:
+  replicaCount: 2
+
+  image:
+    repository: suyog18/devops-challenge
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 3000
+    targetPort: 3000
+    nodePort: 30081
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16-alpine"
+    pullPolicy: IfNotPresent
+
+  service:
+    port: 5432
+    targetPort: 5432
+
+  storage:
+    size: 1Gi
+    accessMode: ReadWriteOnce
+
+  database:
+    name: appdb
+    user: appuser
+    password: apppassword
